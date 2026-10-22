@@ -1,0 +1,2253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CUVA Student Activity Portal</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- QRCode Generator Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              200: '#fecdd3',
+              500: '#f43f5e',
+              600: '#e11d48',
+              700: '#be123c',
+              800: '#9f1239',
+              900: '#881337',
+            },
+            cuva: {
+              red: '#ED1C24',
+              blue: '#0072CE',
+              green: '#00A651',
+              gold: '#FDB913',
+              dark: '#231F20'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    .ticket-dashed-border {
+      background-image: linear-gradient(to right, #e2e8f0 50%, rgba(255, 255, 255, 0) 0%);
+      background-position: bottom;
+      background-size: 14px 2px;
+      background-repeat: repeat-x;
+    }
+    .cuva-gradient-bg {
+      background: linear-gradient(135deg, #1e1b2e 0%, #2a0815 50%, #1a162b 100%);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- ============================================== -->
+  <!-- TOP APP HEADER & BRANDING SPACE                -->
+  <!-- ============================================== -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo & Title Section -->
+        <div class="flex items-center gap-3.5 sm:gap-4">
+          <!-- CUVA OFFICIAL LOGO SLOT -->
+          <div id="cuva-logo-container" class="relative group cursor-pointer flex-shrink-0" onclick="showLogoInfoAlert()">
+            <div id="cuva-logo" class="w-13 h-13 sm:w-16 sm:h-16 rounded-2xl bg-white border border-slate-200/90 shadow-sm p-1.5 flex items-center justify-center transition-transform hover:scale-105">
+              <!-- Inline high-fidelity SVG reproduction of the CUVA emblem -->
+              <svg viewBox="0 0 400 240" class="w-full h-full object-contain" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Blue Wave -->
+                <path d="M15 140 C 60 145, 95 160, 150 145 C 120 158, 80 162, 28 152 Z" fill="#0072CE" />
+                <path d="M12 140 C 45 155, 100 148, 145 146 C 105 160, 50 166, 12 140 Z" fill="#0072CE" />
+                <!-- Green Wave -->
+                <path d="M45 175 C 90 180, 130 190, 175 165 C 140 185, 95 190, 45 175 Z" fill="#00A651" />
+                <path d="M40 176 C 85 188, 130 178, 175 168 C 130 192, 80 192, 40 176 Z" fill="#00A651" />
+                <!-- Dark Wave (Right) -->
+                <path d="M225 150 C 270 135, 315 138, 355 145 C 310 152, 265 148, 225 150 Z" fill="#231F20" />
+                <path d="M228 152 C 265 136, 310 136, 350 144 C 305 156, 260 154, 228 152 Z" fill="#231F20" />
+                <!-- Gold Wave (Bottom Right) -->
+                <path d="M215 175 C 265 185, 330 160, 385 172 C 335 188, 265 195, 215 175 Z" fill="#FDB913" />
+                <!-- CUVA Heart & Hand/Dove Emblem -->
+                <path d="M198 22 C 160 -8, 92 18, 95 86 C 98 135, 160 175, 185 200 C 182 178, 155 155, 132 118 C 112 85, 125 45, 162 40 C 185 36, 202 52, 212 65 C 220 52, 240 35, 265 40 C 300 45, 315 85, 292 122 C 268 160, 205 192, 185 200 C 215 170, 290 125, 288 78 C 285 25, 230 -5, 198 22 Z" fill="#ED1C24" />
+                <!-- Inner Dove Hand Cutout in Heart -->
+                <path d="M125 78 C 115 82, 110 88, 118 96 C 130 96, 142 85, 155 98 C 165 110, 172 135, 188 170 C 196 150, 206 130, 218 108 C 228 92, 248 65, 256 50 C 250 48, 242 54, 236 66 L 218 95 C 218 95, 232 70, 240 56 C 234 54, 228 58, 222 70 L 205 98 C 205 98, 218 75, 224 64 C 218 63, 214 66, 208 76 L 194 102 C 182 120, 168 130, 158 120 C 145 106, 145 88, 125 78 Z" fill="#FFFFFF" />
+                <!-- Lower Red Swirl Base -->
+                <path d="M105 195 C 135 220, 225 228, 270 190 C 225 210, 150 215, 105 195 Z" fill="#ED1C24" />
+              </svg>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs uppercase tracking-widest font-extrabold text-brand-600 bg-brand-50 px-2.5 py-0.5 rounded-md border border-brand-100 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-600"></span> CUVA Portal
+              </span>
+              <span class="text-[11px] font-semibold text-slate-400 hidden sm:inline">NUIST Campus</span>
+            </div>
+            <h1 class="text-base sm:text-xl font-black text-slate-900 tracking-tight leading-tight">College of United Volunteer Association</h1>
+            <p class="text-[11px] sm:text-xs text-slate-500 font-medium">Student Activity Registration & Check-in System</p>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs & Auth Profile -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- View Navigation Tabs -->
+          <nav class="hidden md:flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200">
+            <button onclick="switchTab('explore')" id="nav-btn-explore" class="px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all bg-white text-slate-900 shadow-sm">
+              Discover Activities
+            </button>
+            <button onclick="switchTab('passes')" id="nav-btn-passes" class="px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all text-slate-600 hover:text-slate-900">
+              My Entry Passes (<span id="my-passes-count">0</span>)
+            </button>
+            <button onclick="switchTab('organizer')" id="nav-btn-organizer" class="px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5 text-brand-600"></i> Organizer Desk
+            </button>
+          </nav>
+
+          <!-- User State Actions -->
+          <div id="auth-actions" class="flex items-center gap-2">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Sub-Nav Tab Bar -->
+    <div class="md:hidden border-t border-slate-200/80 bg-slate-50 px-3 py-2 flex justify-around text-xs font-bold">
+      <button onclick="switchTab('explore')" id="m-nav-btn-explore" class="px-3 py-1.5 rounded-lg text-brand-600 bg-white shadow-xs">Discover</button>
+      <button onclick="switchTab('passes')" id="m-nav-btn-passes" class="px-3 py-1.5 rounded-lg text-slate-600">My Passes (<span id="m-passes-count">0</span>)</button>
+      <button onclick="switchTab('organizer')" id="m-nav-btn-organizer" class="px-3 py-1.5 rounded-lg text-slate-600 flex items-center gap-1">
+        <i data-lucide="shield-check" class="w-3 h-3 text-brand-600"></i> Organizer
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8">
+
+    <!-- ============================================== -->
+    <!-- VIEW 1: EXPLORE / DISCOVER ACTIVITIES          -->
+    <!-- ============================================== -->
+    <div id="tab-explore" class="space-y-8">
+
+      <!-- TOP EARLIEST UPCOMING ACTIVITY HERO BANNER -->
+      <section id="earliest-activity-hero" class="relative overflow-hidden rounded-3xl cuva-gradient-bg text-white p-6 sm:p-10 shadow-xl border border-rose-900/30">
+        <!-- Background Ambient Color Waves -->
+        <div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-brand-600/25 blur-3xl pointer-events-none"></div>
+        <div class="absolute -left-16 -bottom-16 w-80 h-80 rounded-full bg-cuva-blue/20 blur-3xl pointer-events-none"></div>
+        <div class="absolute right-1/3 bottom-0 w-64 h-32 bg-cuva-gold/15 blur-2xl pointer-events-none"></div>
+
+        <div id="hero-content" class="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 sm:gap-8">
+          <!-- Populated dynamically with earliest upcoming event -->
+        </div>
+      </section>
+
+      <!-- ACTIVITIES FILTER BAR & SEARCH -->
+      <section class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs">
+        <div class="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0" id="category-pills">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="flex items-center gap-2.5 w-full sm:w-auto">
+          <div class="relative flex-grow sm:w-64">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+            <input type="text" id="search-activity-input" oninput="renderActivities()" placeholder="Search activities, location..." class="w-full pl-9 pr-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition">
+          </div>
+          <span class="text-xs font-bold text-slate-400 whitespace-nowrap" id="activity-counter-badge">0 Found</span>
+        </div>
+      </section>
+
+      <!-- ACTIVITIES GRID -->
+      <section>
+        <div id="activities-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Rendered dynamically by JS -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- VIEW 2: MY ENTRY PASSES                        -->
+    <!-- ============================================== -->
+    <div id="tab-passes" class="hidden space-y-6">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-brand-50 text-brand-600 font-extrabold text-[11px] uppercase tracking-wider">Student ID Wallet</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">My Activity Passes</h2>
+          <p class="text-xs sm:text-sm text-slate-500">Present your digital QR pass at the entrance for instant check-in by CUVA organizers.</p>
+        </div>
+        <button onclick="switchTab('explore')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+          <i data-lucide="compass" class="w-4 h-4"></i> Explore More Activities
+        </button>
+      </div>
+
+      <div id="my-passes-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- VIEW 3: ORGANIZER DESK                         -->
+    <!-- ============================================== -->
+    <div id="tab-organizer" class="hidden space-y-8">
+      
+      <!-- PERMISSION GUARD (WHEN NOT AUTHORIZED) -->
+      <div id="organizer-guard-notice" class="hidden bg-white rounded-3xl p-8 sm:p-12 text-center border border-slate-200 shadow-sm space-y-4">
+        <div class="w-16 h-16 rounded-3xl bg-brand-50 text-brand-600 flex items-center justify-center mx-auto">
+          <i data-lucide="lock" class="w-8 h-8"></i>
+        </div>
+        <div class="max-w-md mx-auto space-y-1.5">
+          <h3 class="text-xl font-black text-slate-900">Restricted Organizer Area</h3>
+          <p class="text-xs text-slate-500">Only designated student IDs with executive organizer privileges can access this desk. Please sign in with an authorized account or contact Super Admin (<span class="font-mono font-bold text-brand-600">202453080043</span>).</p>
+        </div>
+        <div class="flex justify-center gap-3 pt-2">
+          <button onclick="switchTab('explore')" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition">
+            Back to Activities
+          </button>
+          <button onclick="openModal('modal-signin')" class="px-4 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs rounded-xl transition shadow-xs">
+            Switch Account
+          </button>
+        </div>
+      </div>
+
+      <!-- MAIN ORGANIZER CONTENT (SHOWN ONLY TO AUTHORIZED ACCOUNTS) -->
+      <div id="organizer-main-content" class="space-y-8">
+        
+        <!-- SUPER ADMIN PRIVILEGE MANAGEMENT PANEL (ONLY VISIBLE TO 202453080043) -->
+        <section id="super-admin-panel" class="hidden bg-gradient-to-br from-slate-900 via-rose-950 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-rose-900/40 space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-white/10 pb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-2xl bg-brand-600 text-white flex items-center justify-center font-black shadow-md">
+                <i data-lucide="shield-alert" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-0.5 rounded-full bg-brand-500/20 text-rose-300 text-[10px] font-black uppercase tracking-wider border border-brand-500/30">Master Super Admin</span>
+                  <span class="text-xs font-mono text-rose-200">ID: 202453080043</span>
+                </div>
+                <h3 class="text-base sm:text-lg font-black text-white mt-0.5">Organizer Access & ID Permissions</h3>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-rose-200/80 bg-white/5 px-3 py-1 rounded-xl border border-white/10" id="superadmin-authorized-count">0 Authorized</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+            <div class="md:col-span-8 space-y-1.5">
+              <label class="block text-xs font-bold text-rose-100">Grant Organizer Privileges by Student ID</label>
+              <div class="flex gap-2">
+                <input type="text" id="sa-grant-id-input" placeholder="Enter student ID (e.g. 2024830192)" class="flex-grow px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-xl text-xs font-mono text-white placeholder-rose-200/50 focus:outline-none focus:ring-2 focus:ring-brand-400">
+                <button onclick="handleSuperAdminAddID()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1.5 whitespace-nowrap">
+                  <i data-lucide="user-plus" class="w-4 h-4"></i> Add to Organizers
+                </button>
+              </div>
+            </div>
+            <div class="md:col-span-4 text-xs text-rose-200/70">
+              Only student IDs authorized in this panel will be able to access the Organizer Desk, scan entrance passes, and edit activities.
+            </div>
+          </div>
+
+          <!-- AUTHORIZED ORGANIZERS LIST -->
+          <div class="space-y-2">
+            <h4 class="text-xs font-extrabold uppercase tracking-wider text-rose-300">Currently Authorized Organizer IDs:</h4>
+            <div id="authorized-ids-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ORGANIZER ACTIONS HEADER -->
+        <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-md bg-brand-50 text-brand-700 font-extrabold text-[11px] uppercase tracking-wider">CUVA Executive Team</span>
+              <span id="organizer-badge-role" class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 font-bold text-[10px]">Authorized</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">Organizer Management Desk</h2>
+            <p class="text-xs sm:text-sm text-slate-500">Create activities, adjust registration windows, verify student entrance passes, and export attendance rosters.</p>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <button onclick="openModal('modal-category-manager')" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition flex items-center gap-1.5">
+              <i data-lucide="tags" class="w-4 h-4 text-slate-500"></i> Manage Categories
+            </button>
+            <button onclick="openEditActivityModal()" class="px-4 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1.5">
+              <i data-lucide="calendar-plus" class="w-4 h-4"></i> Create Activity
+            </button>
+          </div>
+        </div>
+
+        <!-- TICKET SCANNER & VERIFIER AT THE DOOR -->
+        <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-slate-100 pb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold">
+                <i data-lucide="scan-line" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="text-base sm:text-lg font-black text-slate-900">Door Ticket Scanner & Check-in</h3>
+                <p class="text-xs text-slate-500">Scan QR codes or type the unique ticket token to admit registered students.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+            <div class="md:col-span-8">
+              <label class="block font-bold text-slate-700 text-xs mb-1.5">Enter Pass Token Code or Scan QR Pass</label>
+              <div class="flex gap-2">
+                <input type="text" id="scan-token-input" placeholder="e.g. CUVA-PASS-8841-GAME" class="flex-grow px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono uppercase focus:outline-none focus:ring-2 focus:ring-brand-500">
+                <button onclick="verifyScannedTicket()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center gap-1.5">
+                  <i data-lucide="check-circle" class="w-4 h-4"></i> Verify Pass
+                </button>
+              </div>
+            </div>
+            <div class="md:col-span-4 flex justify-start md:justify-end">
+              <button onclick="simulateCameraScan()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl border border-slate-200 flex items-center gap-1.5 transition">
+                <i data-lucide="camera" class="w-4 h-4 text-brand-600"></i> Test Scan Ticket
+              </button>
+            </div>
+          </div>
+
+          <!-- Scanner Feedback Alert Box -->
+          <div id="scan-feedback" class="hidden"></div>
+        </section>
+
+        <!-- SCHEDULED ACTIVITIES MANAGEMENT TABLE -->
+        <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-slate-100 pb-4">
+            <div>
+              <h3 class="text-base sm:text-lg font-black text-slate-900">Manage Campus Activities</h3>
+              <p class="text-xs text-slate-500">Edit schedule times, modify quotas, adjust registration windows, or cancel events.</p>
+            </div>
+            <span class="text-xs font-bold px-3 py-1 bg-slate-100 text-slate-700 rounded-xl" id="admin-event-count">0 Activities</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50/70 text-slate-400 uppercase font-semibold text-[10px] border-b border-slate-200">
+                <tr>
+                  <th class="py-3 px-4">Activity Title</th>
+                  <th class="py-3 px-4">Held Schedule</th>
+                  <th class="py-3 px-4">Registration Window</th>
+                  <th class="py-3 px-4">Quota</th>
+                  <th class="py-3 px-4">Certificate</th>
+                  <th class="py-3 px-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-events-list-body" class="divide-y divide-slate-100">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ATTENDEE MASTER ROSTER -->
+        <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-slate-100 pb-4">
+            <div>
+              <h3 class="text-base sm:text-lg font-black text-slate-900">Registered Students Roster</h3>
+              <p class="text-xs text-slate-500">Live attendance status and details of registered student participants.</p>
+            </div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <select id="admin-event-filter" onchange="renderAdminRoster()" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-brand-500">
+                <option value="all">All Activities (Master Roster)</option>
+              </select>
+              <button onclick="exportCurrentEventCSV()" class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 transition">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i> Export View
+              </button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50/70 text-slate-400 uppercase font-semibold text-[10px] border-b border-slate-200">
+                <tr>
+                  <th class="py-3 px-4">Student Name</th>
+                  <th class="py-3 px-4">Student ID</th>
+                  <th class="py-3 px-4">WeChat</th>
+                  <th class="py-3 px-4">Major & Grade</th>
+                  <th class="py-3 px-4">Activity</th>
+                  <th class="py-3 px-4">Door Status</th>
+                  <th class="py-3 px-4">Ticket Token</th>
+                  <th class="py-3 px-4 text-right">Check-in Action</th>
+                </tr>
+              </thead>
+              <tbody id="admin-roster-body" class="divide-y divide-slate-100">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ============================================== -->
+  <!-- MODAL: DIGITAL QR ENTRANCE PASS / TICKET       -->
+  <!-- ============================================== -->
+  <div id="modal-pass" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl relative border border-slate-100 animate-in fade-in">
+      <button onclick="closeModal('modal-pass')" class="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-slate-900/10 hover:bg-slate-900/20 text-slate-700 flex items-center justify-center transition">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <!-- Ticket Header with CUVA Branding -->
+      <div class="cuva-gradient-bg p-6 text-white text-center relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 w-32 h-32 rounded-full bg-brand-600/30 blur-xl"></div>
+        <div class="flex items-center justify-center gap-2 mb-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span class="text-[10px] font-black uppercase tracking-widest text-rose-200">Official Entry Pass</span>
+        </div>
+        <h3 id="pass-event-title" class="text-base font-black leading-tight text-white mb-1">Activity Title</h3>
+        <span id="pass-event-category" class="px-2.5 py-0.5 rounded-full bg-white/20 text-[10px] font-bold">Category</span>
+      </div>
+
+      <!-- Ticket Body with QR Code -->
+      <div class="p-6 space-y-5 text-center">
+        <!-- Live Generated QR Code Container -->
+        <div class="flex flex-col items-center justify-center space-y-2">
+          <div id="pass-qrcode" class="p-3 bg-white border border-slate-200 rounded-2xl shadow-inner flex items-center justify-center">
+            <!-- Rendered by QRCodeJS -->
+          </div>
+          <span id="pass-token-display" class="font-mono text-xs font-black text-slate-700 tracking-wider">CUVA-PASS-XXXX</span>
+        </div>
+
+        <div class="ticket-dashed-border"></div>
+
+        <!-- Student Details -->
+        <div class="space-y-2 text-left text-xs bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
+          <div class="flex justify-between">
+            <span class="text-slate-400 font-medium">Attendee:</span>
+            <span id="pass-student-name" class="font-bold text-slate-800">Student Name</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400 font-medium">Student ID:</span>
+            <span id="pass-student-id" class="font-mono font-bold text-slate-800">2024XXXXXXXX</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400 font-medium">WeChat:</span>
+            <span id="pass-wechat" class="font-medium text-slate-700">wx_id</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400 font-medium">Schedule:</span>
+            <span id="pass-event-time" class="font-medium text-slate-700">Time</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400 font-medium">Location:</span>
+            <span id="pass-event-venue" class="font-medium text-slate-700">Venue</span>
+          </div>
+          <div id="pass-cert-row" class="flex justify-between text-emerald-700 font-bold pt-1 border-t border-slate-200">
+            <span>Certificate:</span>
+            <span>Participation Certificate Eligible</span>
+          </div>
+        </div>
+
+        <p class="text-[10px] text-slate-400">Please have this QR ticket ready upon entering the venue for rapid check-in.</p>
+        
+        <button onclick="closeModal('modal-pass')" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: SIGN UP                                 -->
+  <!-- ============================================== -->
+  <div id="modal-signup" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md max-h-[90vh] overflow-y-auto rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 relative border border-slate-100">
+      <button onclick="closeModal('modal-signup')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div>
+        <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-brand-600 flex items-center justify-center mb-2">
+          <i data-lucide="user-plus" class="w-5 h-5"></i>
+        </div>
+        <h3 class="text-xl font-black text-slate-900">Student Profile Sign Up</h3>
+        <p class="text-xs text-slate-500">Register your student info once. Enjoy 1-click registration for all CUVA activities.</p>
+      </div>
+
+      <form id="form-signup" onsubmit="handleSignup(event)" class="space-y-3.5 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Full Name *</label>
+          <input type="text" id="su-name" required placeholder="e.g. Alex Johnson or Li Wei" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Student ID * (Unique Login)</label>
+            <input type="text" id="su-studentid" required placeholder="e.g. 2024830192" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50 font-mono">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">WeChat Handle *</label>
+            <input type="text" id="su-wechat" required placeholder="e.g. wx_alex2024" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Major / School *</label>
+            <input type="text" id="su-major" required placeholder="e.g. Software Engineering" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Grade Level *</label>
+            <select id="su-grade" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50 font-medium">
+              <option value="Bachelor">Bachelor</option>
+              <option value="Master">Master</option>
+              <option value="PhD">PhD</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Password * (Min 8 Characters)</label>
+          <input type="password" id="su-password" required minlength="8" placeholder="At least 8 characters" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50">
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl transition text-xs sm:text-sm shadow-md mt-2">
+          Create Account & Log In
+        </button>
+
+        <p class="text-center text-slate-500">
+          Already have an account? 
+          <button type="button" onclick="switchModal('modal-signup', 'modal-signin')" class="text-brand-600 font-bold hover:underline">Sign In</button>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: SIGN IN                                 -->
+  <!-- ============================================== -->
+  <div id="modal-signin" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 relative border border-slate-100">
+      <button onclick="closeModal('modal-signin')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div>
+        <div class="w-10 h-10 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center mb-2">
+          <i data-lucide="log-in" class="w-5 h-5"></i>
+        </div>
+        <h3 class="text-xl font-black text-slate-900">Student Sign In</h3>
+        <p class="text-xs text-slate-500">Log in with your Student ID and Password.</p>
+      </div>
+
+      <!-- Quick Super Admin Test Shortcut -->
+      <div class="bg-rose-50 border border-rose-200/80 p-3 rounded-2xl flex items-center justify-between">
+        <div>
+          <p class="text-[11px] font-black text-rose-950">Super Admin ID: 202453080043</p>
+          <p class="text-[10px] text-rose-700">Root master permissions</p>
+        </div>
+        <button type="button" onclick="quickFillSuperAdmin()" class="px-2.5 py-1 bg-brand-600 hover:bg-brand-500 text-white text-[10px] font-bold rounded-lg transition">
+          Auto Fill
+        </button>
+      </div>
+
+      <form id="form-signin" onsubmit="handleSignin(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Student ID</label>
+          <input type="text" id="si-studentid" required placeholder="e.g. 2024830192" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50 font-mono">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Password</label>
+          <input type="password" id="si-password" required placeholder="Your password" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50">
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl transition text-xs sm:text-sm shadow-md mt-2">
+          Sign In
+        </button>
+
+        <p class="text-center text-slate-500">
+          First time here? 
+          <button type="button" onclick="switchModal('modal-signin', 'modal-signup')" class="text-brand-600 font-bold hover:underline">Register Once</button>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: CUSTOM CONFIRMATION DIALOG (IFRAME SAFE)-->
+  <!-- ============================================== -->
+  <div id="modal-confirm" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl space-y-4 relative border border-slate-100">
+      <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto">
+        <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+      </div>
+      <div class="text-center space-y-1">
+        <h4 id="confirm-title" class="font-black text-slate-900 text-base">Confirm Action</h4>
+        <p id="confirm-desc" class="text-xs text-slate-500">Are you sure you want to proceed?</p>
+      </div>
+      <div class="grid grid-cols-2 gap-2 pt-2">
+        <button type="button" onclick="closeConfirmDialog()" class="py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition">
+          Cancel
+        </button>
+        <button id="confirm-btn-action" type="button" class="py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-xl shadow-md transition">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: CUSTOM PROMPT DIALOG (IFRAME SAFE)      -->
+  <!-- ============================================== -->
+  <div id="modal-prompt" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl space-y-4 relative border border-slate-100">
+      <div class="text-left space-y-1">
+        <h4 id="prompt-title" class="font-black text-slate-900 text-base">Edit Value</h4>
+        <p id="prompt-desc" class="text-xs text-slate-500">Please provide a new value:</p>
+      </div>
+      <div>
+        <input type="text" id="prompt-input" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50 text-xs font-medium">
+      </div>
+      <div class="grid grid-cols-2 gap-2 pt-1">
+        <button type="button" onclick="closePromptDialog()" class="py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition">
+          Cancel
+        </button>
+        <button id="prompt-btn-save" type="button" class="py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs rounded-xl shadow-md transition">
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: CREATE / EDIT ACTIVITY (ADMIN)          -->
+  <!-- ============================================== -->
+  <div id="modal-event-editor" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 relative border border-slate-100">
+      <button onclick="closeModal('modal-event-editor')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div>
+        <h3 id="event-editor-modal-title" class="text-xl font-black text-slate-900">Publish Campus Activity</h3>
+        <p class="text-xs text-slate-500">Configure event details, duration, capacity limit, and registration time window.</p>
+      </div>
+
+      <form id="form-event-editor" onsubmit="handleSaveActivity(event)" class="space-y-4 text-xs">
+        <input type="hidden" id="ev-edit-id">
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Activity Title *</label>
+          <input type="text" id="ev-title" required placeholder="e.g. CUVA Saturday Campus Board Game Night" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Category *</label>
+            <select id="ev-category" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Participant Quota (Max Limit) *</label>
+            <input type="number" id="ev-quota" required min="1" max="500" value="40" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Venue / Room Location *</label>
+          <input type="text" id="ev-venue" required placeholder="e.g. Student Activity Center 3F Multi-Hall" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50">
+        </div>
+
+        <!-- Activity Held Date & Time -->
+        <div class="bg-indigo-50/50 p-3.5 rounded-2xl border border-indigo-100 space-y-3">
+          <div class="flex items-center gap-1.5 font-bold text-indigo-900">
+            <i data-lucide="clock" class="w-4 h-4 text-brand-600"></i> Activity Execution Schedule (Duration ~2 Hours)
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-600 mb-1">Starts At *</label>
+              <input type="datetime-local" id="ev-start-time" required class="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 text-xs">
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-600 mb-1">Finishes At *</label>
+              <input type="datetime-local" id="ev-end-time" required class="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 text-xs">
+            </div>
+          </div>
+        </div>
+
+        <!-- Registration Window -->
+        <div class="bg-amber-50/60 p-3.5 rounded-2xl border border-amber-100 space-y-3">
+          <div class="flex items-center gap-1.5 font-bold text-amber-900">
+            <i data-lucide="calendar-check" class="w-4 h-4 text-amber-600"></i> Registration Window (Registration Closes Automatically)
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-600 mb-1">Registration Opens *</label>
+              <input type="datetime-local" id="ev-reg-open" required class="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 text-xs">
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-600 mb-1">Registration Closes *</label>
+              <input type="datetime-local" id="ev-reg-close" required class="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 text-xs">
+            </div>
+          </div>
+          <p class="text-[10px] text-amber-800">The "Register Now" button will strictly be clickable only between these times and will deactivate once closed or full.</p>
+        </div>
+
+        <!-- Certificate Checkbox -->
+        <div class="flex items-center gap-2 p-3 bg-slate-50 border border-slate-200 rounded-xl">
+          <input type="checkbox" id="ev-certificate" class="w-4 h-4 text-brand-600 rounded focus:ring-brand-500">
+          <label for="ev-certificate" class="font-bold text-slate-800 text-xs cursor-pointer">
+            Issue Certificate of Attendance / Participation for this activity
+          </label>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Description & Highlights *</label>
+          <textarea id="ev-desc" rows="3" required placeholder="Describe games provided, debate topics, refreshments, or preparation needed..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl transition text-xs sm:text-sm shadow-md">
+          Save & Publish Activity
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: CATEGORY MANAGER                        -->
+  <!-- ============================================== -->
+  <div id="modal-category-manager" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 relative border border-slate-100">
+      <button onclick="closeModal('modal-category-manager')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div>
+        <h3 class="text-xl font-black text-slate-900">Manage Activity Categories</h3>
+        <p class="text-xs text-slate-500">Add, rename, or remove activity tags for CUVA programs.</p>
+      </div>
+
+      <!-- Add New Category -->
+      <div class="flex gap-2">
+        <input type="text" id="new-category-input" placeholder="e.g. Cinema & Film" class="flex-grow px-3.5 py-2 rounded-xl border border-slate-200 text-xs bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-500">
+        <button onclick="handleAddCategory()" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs rounded-xl shadow-xs transition">
+          Add
+        </button>
+      </div>
+
+      <!-- Categories List -->
+      <div class="space-y-2 max-h-60 overflow-y-auto" id="categories-manage-list">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: LOGO BRANDING INFORMATION               -->
+  <!-- ============================================== -->
+  <div id="modal-logo-info" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl space-y-4 relative border border-slate-100">
+      <button onclick="closeModal('modal-logo-info')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <div class="w-16 h-16 rounded-2xl bg-white border border-slate-200 shadow-sm p-2 flex items-center justify-center mx-auto">
+        <svg viewBox="0 0 400 240" class="w-full h-full object-contain" fill="none">
+          <path d="M15 140 C 60 145, 95 160, 150 145 C 120 158, 80 162, 28 152 Z" fill="#0072CE" />
+          <path d="M45 175 C 90 180, 130 190, 175 165 C 140 185, 95 190, 45 175 Z" fill="#00A651" />
+          <path d="M225 150 C 270 135, 315 138, 355 145 C 310 152, 265 148, 225 150 Z" fill="#231F20" />
+          <path d="M215 175 C 265 185, 330 160, 385 172 C 335 188, 265 195, 215 175 Z" fill="#FDB913" />
+          <path d="M198 22 C 160 -8, 92 18, 95 86 C 98 135, 160 175, 185 200 C 182 178, 155 155, 132 118 C 112 85, 125 45, 162 40 C 185 36, 202 52, 212 65 C 220 52, 240 35, 265 40 C 300 45, 315 85, 292 122 C 268 160, 205 192, 185 200 C 215 170, 290 125, 288 78 C 285 25, 230 -5, 198 22 Z" fill="#ED1C24" />
+          <path d="M125 78 C 115 82, 110 88, 118 96 C 130 96, 142 85, 155 98 C 165 110, 172 135, 188 170 C 196 150, 206 130, 218 108 C 228 92, 248 65, 256 50 C 250 48, 242 54, 236 66 L 218 95 C 218 95, 232 70, 240 56 C 234 54, 228 58, 222 70 L 205 98 C 205 98, 218 75, 224 64 C 218 63, 214 66, 208 76 L 194 102 C 182 120, 168 130, 158 120 C 145 106, 145 88, 125 78 Z" fill="#FFFFFF" />
+          <path d="M105 195 C 135 220, 225 228, 270 190 C 225 210, 150 215, 105 195 Z" fill="#ED1C24" />
+        </svg>
+      </div>
+      <div class="text-center">
+        <h4 class="font-black text-slate-900 text-base">CUVA Official Identity</h4>
+        <p class="text-xs text-slate-500 mt-1">College of United Volunteer Association emblem featuring the signature warm red heart, peaceful dove hand, and multi-colored waves representing united students.</p>
+      </div>
+      <button onclick="closeModal('modal-logo-info')" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition">Got it</button>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- FOOTER                                         -->
+  <!-- ============================================== -->
+  <footer class="mt-auto border-t border-slate-200 bg-white py-8 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <span class="font-extrabold text-slate-900">CUVA</span>
+        <span>•</span>
+        <span>College of United Volunteer Association • NUIST</span>
+      </div>
+      <div class="flex items-center gap-4 text-slate-400">
+        <span>Campus Activity Portal</span>
+        <span>•</span>
+        <span>Vercel Ready</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Box -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ============================================== -->
+  <!-- LOGIC & APPLICATION STATE                      -->
+  <!-- ============================================== -->
+  <script>
+    // LocalStorage Keys for persistent student data & mock database
+    const STORAGE_USERS = 'cuva_students_db';
+    const STORAGE_ACTIVE_USER = 'cuva_current_session_user';
+    const STORAGE_EVENTS = 'cuva_events_db';
+    const STORAGE_REGISTRATIONS = 'cuva_registrations_db';
+    const STORAGE_CATEGORIES = 'cuva_categories_db';
+    const STORAGE_ORGANIZERS = 'cuva_authorized_organizers_db';
+
+    // SUPER ADMIN CONSTANT
+    const SUPER_ADMIN_ID = "202453080043";
+
+    // Default Seed Categories
+    const DEFAULT_CATEGORIES = [
+      "Board Games",
+      "Parliamentary Debate",
+      "Language & Culture",
+      "Workshops & Skills",
+      "Movie & Social"
+    ];
+
+    // Helper to generate ISO strings relative to now
+    function getFutureISO(dayOffset, hours, minutes) {
+      const d = new Date();
+      d.setDate(d.getDate() + dayOffset);
+      d.setHours(hours, minutes, 0, 0);
+      return d.toISOString();
+    }
+
+    // Seed Events for standard student activities (lasting around 2 hours)
+    const DEFAULT_EVENTS = [
+      {
+        id: "ev_1",
+        title: "Campus Board Game Night: Avalon, Catan & Mahjong",
+        category: "Board Games",
+        venue: "Student Activity Center Room 302",
+        quota: 35,
+        startTime: getFutureISO(1, 19, 0),   // Tomorrow at 19:00
+        endTime: getFutureISO(1, 21, 0),     // Tomorrow at 21:00 (2 hrs)
+        regOpenTime: getFutureISO(-2, 8, 0), // Opened 2 days ago
+        regCloseTime: getFutureISO(1, 16, 0),// Closes tomorrow 16:00
+        hasCertificate: false,
+        desc: "Join us for our signature weekly Friday game evening! Meet students across all colleges for Avalon, Settlers of Catan, Uno, and Mahjong. Snacks, drinks, and rule guides provided."
+      },
+      {
+        id: "ev_2",
+        title: "Inter-College Debate: Artificial Intelligence in Academia",
+        category: "Parliamentary Debate",
+        venue: "Academic Hall B104 (Amphitheater)",
+        quota: 50,
+        startTime: getFutureISO(3, 18, 30),  // In 3 days at 18:30
+        endTime: getFutureISO(3, 20, 30),    // In 3 days at 20:30 (2 hrs)
+        regOpenTime: getFutureISO(-1, 9, 0), // Opened yesterday
+        regCloseTime: getFutureISO(3, 14, 0),// Closes day of event
+        hasCertificate: true,
+        desc: "Open debate on student ethics, LLM use in coursework, and future career landscapes. 4 rounds of 15 minutes each. Audience voting and commentary. Official certificate of debate participation awarded."
+      },
+      {
+        id: "ev_3",
+        title: "English & Mandarin Cultural Exchange Corner",
+        category: "Language & Culture",
+        venue: "International Student Lounge 2F",
+        quota: 30,
+        startTime: getFutureISO(5, 15, 0),   // In 5 days at 15:00
+        endTime: getFutureISO(5, 17, 0),     // In 5 days at 17:00 (2 hrs)
+        regOpenTime: getFutureISO(0, 10, 0), // Opens today at 10:00
+        regCloseTime: getFutureISO(5, 12, 0),// Closes in 5 days
+        hasCertificate: true,
+        desc: "Casual conversation tables, tea tasting, and cultural trivia designed to help international and domestic students practice language and connect."
+      },
+      {
+        id: "ev_4",
+        title: "Poster & UI Design Hands-on Workshop with Figma",
+        category: "Workshops & Skills",
+        venue: "Computer Science Building Lab 408",
+        quota: 25,
+        startTime: getFutureISO(7, 14, 0),   // In 7 days at 14:00
+        endTime: getFutureISO(7, 16, 30),    // 2.5 hours
+        regOpenTime: getFutureISO(2, 9, 0),  // Registration opens in 2 days
+        regCloseTime: getFutureISO(7, 10, 0),
+        hasCertificate: true,
+        desc: "Learn modern visual communication and typography fundamentals to craft standout club posters and presentation slide decks. Certificate of completion provided."
+      }
+    ];
+
+    // In-memory runtime state
+    let state = {
+      users: [],
+      currentUser: null,
+      events: [],
+      registrations: [],
+      categories: [],
+      authorizedOrganizers: [],
+      selectedCategory: "All",
+      currentTab: "explore"
+    };
+
+    // Load from LocalStorage
+    function initDatabase() {
+      try {
+        const storedUsers = localStorage.getItem(STORAGE_USERS);
+        state.users = storedUsers ? JSON.parse(storedUsers) : [
+          {
+            name: "Super Admin Officer",
+            studentId: SUPER_ADMIN_ID,
+            wechat: "cuva_superadmin",
+            major: "Computer & Software",
+            grade: "Bachelor",
+            passwordHash: "admin12345"
+          },
+          {
+            name: "Alex Zhang",
+            studentId: "2024830192",
+            wechat: "wx_alex_z",
+            major: "Software Engineering",
+            grade: "Bachelor",
+            passwordHash: "pass12345"
+          }
+        ];
+
+        // Ensure Super Admin is always present in users table
+        if (!state.users.some(u => u.studentId === SUPER_ADMIN_ID)) {
+          state.users.unshift({
+            name: "Super Admin Officer",
+            studentId: SUPER_ADMIN_ID,
+            wechat: "cuva_superadmin",
+            major: "Computer & Software",
+            grade: "Bachelor",
+            passwordHash: "admin12345"
+          });
+        }
+
+        const storedActive = localStorage.getItem(STORAGE_ACTIVE_USER);
+        state.currentUser = storedActive ? JSON.parse(storedActive) : null;
+
+        const storedEvents = localStorage.getItem(STORAGE_EVENTS);
+        state.events = storedEvents ? JSON.parse(storedEvents) : DEFAULT_EVENTS;
+
+        const storedRegs = localStorage.getItem(STORAGE_REGISTRATIONS);
+        state.registrations = storedRegs ? JSON.parse(storedRegs) : [
+          {
+            id: "reg_1",
+            eventId: "ev_1",
+            studentId: "2024830192",
+            registeredAt: new Date().toISOString(),
+            status: "REGISTERED",
+            token: "CUVA-PASS-8841-GAME"
+          }
+        ];
+
+        const storedCats = localStorage.getItem(STORAGE_CATEGORIES);
+        state.categories = storedCats ? JSON.parse(storedCats) : DEFAULT_CATEGORIES;
+
+        const storedOrganizers = localStorage.getItem(STORAGE_ORGANIZERS);
+        state.authorizedOrganizers = storedOrganizers ? JSON.parse(storedOrganizers) : [SUPER_ADMIN_ID];
+
+        // Ensure Super Admin ID is permanently in authorizedOrganizers
+        if (!state.authorizedOrganizers.includes(SUPER_ADMIN_ID)) {
+          state.authorizedOrganizers.unshift(SUPER_ADMIN_ID);
+        }
+
+        saveAllState();
+      } catch (err) {
+        console.error("Init database error:", err);
+      }
+    }
+
+    function saveAllState() {
+      localStorage.setItem(STORAGE_USERS, JSON.stringify(state.users));
+      localStorage.setItem(STORAGE_ACTIVE_USER, JSON.stringify(state.currentUser));
+      localStorage.setItem(STORAGE_EVENTS, JSON.stringify(state.events));
+      localStorage.setItem(STORAGE_REGISTRATIONS, JSON.stringify(state.registrations));
+      localStorage.setItem(STORAGE_CATEGORIES, JSON.stringify(state.categories));
+      localStorage.setItem(STORAGE_ORGANIZERS, JSON.stringify(state.authorizedOrganizers));
+    }
+
+    // Role verification helpers
+    function isSuperAdmin() {
+      return state.currentUser && state.currentUser.studentId === SUPER_ADMIN_ID;
+    }
+
+    function isAuthorizedOrganizer() {
+      if (!state.currentUser) return false;
+      if (state.currentUser.studentId === SUPER_ADMIN_ID) return true;
+      return state.authorizedOrganizers.includes(state.currentUser.studentId);
+    }
+
+    // Custom Iframe-Safe Confirmation Modal
+    let pendingConfirmAction = null;
+    function openConfirmDialog(title, message, onConfirm) {
+      document.getElementById('confirm-title').textContent = title;
+      document.getElementById('confirm-desc').textContent = message;
+      pendingConfirmAction = onConfirm;
+      
+      const actionBtn = document.getElementById('confirm-btn-action');
+      actionBtn.onclick = function() {
+        if (pendingConfirmAction) pendingConfirmAction();
+        closeConfirmDialog();
+      };
+      
+      openModal('modal-confirm');
+    }
+
+    function closeConfirmDialog() {
+      closeModal('modal-confirm');
+      pendingConfirmAction = null;
+    }
+
+    // Custom Iframe-Safe Prompt Modal
+    let pendingPromptAction = null;
+    function openPromptDialog(title, desc, defaultValue, onSave) {
+      document.getElementById('prompt-title').textContent = title;
+      document.getElementById('prompt-desc').textContent = desc;
+      const input = document.getElementById('prompt-input');
+      input.value = defaultValue || '';
+      pendingPromptAction = onSave;
+
+      const saveBtn = document.getElementById('prompt-btn-save');
+      saveBtn.onclick = function() {
+        const val = input.value.trim();
+        if (val && pendingPromptAction) pendingPromptAction(val);
+        closePromptDialog();
+      };
+
+      openModal('modal-prompt');
+      setTimeout(() => input.focus(), 100);
+    }
+
+    function closePromptDialog() {
+      closeModal('modal-prompt');
+      pendingPromptAction = null;
+    }
+
+    // Switch between Main Tabs
+    function switchTab(tabId) {
+      state.currentTab = tabId;
+      
+      document.getElementById('tab-explore').classList.toggle('hidden', tabId !== 'explore');
+      document.getElementById('tab-passes').classList.toggle('hidden', tabId !== 'passes');
+      document.getElementById('tab-organizer').classList.toggle('hidden', tabId !== 'organizer');
+
+      // Update Header Tab styling
+      const tabs = ['explore', 'passes', 'organizer'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`nav-btn-${t}`);
+        const mBtn = document.getElementById(`m-nav-btn-${t}`);
+        if (btn) {
+          if (t === tabId) {
+            btn.className = "px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all bg-white text-slate-900 shadow-sm";
+          } else {
+            btn.className = "px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all text-slate-600 hover:text-slate-900 flex items-center gap-1.5";
+          }
+        }
+        if (mBtn) {
+          if (t === tabId) {
+            mBtn.className = "px-3 py-1.5 rounded-lg text-brand-600 bg-white shadow-xs font-bold";
+          } else {
+            mBtn.className = "px-3 py-1.5 rounded-lg text-slate-600 font-bold flex items-center gap-1";
+          }
+        }
+      });
+
+      if (tabId === 'passes') renderMyPasses();
+      if (tabId === 'organizer') renderOrganizerDashboard();
+      if (tabId === 'explore') renderExploreView();
+
+      lucide.createIcons();
+    }
+
+    // Render Earliest Upcoming Activity in the Top Banner
+    function renderEarliestActivityBanner() {
+      const heroContainer = document.getElementById('hero-content');
+      if (!heroContainer) return;
+
+      const now = new Date();
+      // Filter activities that haven't ended yet, sorted by earliest start time
+      const upcomingEvents = [...state.events]
+        .filter(ev => new Date(ev.endTime) > now)
+        .sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+
+      if (upcomingEvents.length === 0) {
+        heroContainer.innerHTML = `
+          <div class="space-y-2">
+            <span class="px-2.5 py-1 bg-white/10 rounded-full text-[11px] font-bold uppercase tracking-wider text-rose-200">CUVA Campus Hub</span>
+            <h2 class="text-2xl sm:text-3xl font-black">No Upcoming Activities Scheduled</h2>
+            <p class="text-xs sm:text-sm text-slate-300">Check back soon! CUVA organizers are preparing fresh campus game nights and debate sessions.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const earliest = upcomingEvents[0];
+      const regStatus = getRegistrationStatus(earliest);
+      const isRegistered = state.currentUser ? isUserRegisteredFor(earliest.id, state.currentUser.studentId) : false;
+      const count = getRegisteredCount(earliest.id);
+      const seatsLeft = Math.max(0, earliest.quota - count);
+
+      const eventStart = new Date(earliest.startTime);
+      const formattedDate = eventStart.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+      const formattedTime = eventStart.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+      heroContainer.innerHTML = `
+        <div class="space-y-3 max-w-2xl">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="px-3 py-1 rounded-full bg-brand-600/30 text-rose-200 border border-brand-500/40 text-[11px] font-extrabold uppercase tracking-wider flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Earliest Upcoming Activity
+            </span>
+            <span class="px-2.5 py-0.5 rounded-full bg-white/10 text-white text-[11px] font-semibold">${earliest.category}</span>
+            ${earliest.hasCertificate ? `<span class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-bold flex items-center gap-1"><i data-lucide="award" class="w-3 h-3 text-amber-400"></i> Certificate Awarded</span>` : ''}
+          </div>
+
+          <h2 class="text-xl sm:text-3xl font-black tracking-tight leading-tight">${earliest.title}</h2>
+          <p class="text-xs sm:text-sm text-slate-300 line-clamp-2">${earliest.desc}</p>
+
+          <div class="flex flex-wrap items-center gap-4 text-xs text-slate-300 pt-1">
+            <span class="flex items-center gap-1.5"><i data-lucide="calendar" class="w-4 h-4 text-brand-400"></i> ${formattedDate} at ${formattedTime}</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="map-pin" class="w-4 h-4 text-brand-400"></i> ${earliest.venue}</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4 text-brand-400"></i> ${seatsLeft} spots left (${count}/${earliest.quota})</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row lg:flex-col items-stretch sm:items-center lg:items-end gap-3 w-full lg:w-auto">
+          ${renderRegisterButton(earliest, regStatus, isRegistered, 'hero')}
+        </div>
+      `;
+      lucide.createIcons();
+    }
+
+    // Helper: Determine Registration Window Status
+    function getRegistrationStatus(event) {
+      const now = new Date().getTime();
+      const openTime = new Date(event.regOpenTime).getTime();
+      const closeTime = new Date(event.regCloseTime).getTime();
+      const count = getRegisteredCount(event.id);
+
+      if (now < openTime) {
+        return { canRegister: false, code: 'NOT_STARTED', label: `Opens ${formatSimpleDate(event.regOpenTime)}` };
+      }
+      if (now > closeTime) {
+        return { canRegister: false, code: 'CLOSED', label: 'Registration Closed (Time Expired)' };
+      }
+      if (count >= event.quota) {
+        return { canRegister: false, code: 'FULL', label: 'Activity Full (Limit Reached)' };
+      }
+      return { canRegister: true, code: 'OPEN', label: 'Register Now' };
+    }
+
+    function formatSimpleDate(isoString) {
+      const d = new Date(isoString);
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+
+    function getRegisteredCount(eventId) {
+      return state.registrations.filter(r => r.eventId === eventId).length;
+    }
+
+    function isUserRegisteredFor(eventId, studentId) {
+      return state.registrations.some(r => r.eventId === eventId && r.studentId === studentId);
+    }
+
+    // Render Registration Button depending on states
+    function renderRegisterButton(event, status, isRegistered, context = 'card') {
+      if (isRegistered) {
+        return `
+          <button onclick="openPassModalForEvent('${event.id}')" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center justify-center gap-1.5 w-full sm:w-auto">
+            <i data-lucide="ticket" class="w-4 h-4"></i> Registered • View Pass
+          </button>
+        `;
+      }
+
+      if (!status.canRegister) {
+        let badgeColor = "bg-slate-700 text-slate-300";
+        if (context === 'card') badgeColor = "bg-slate-100 text-slate-400 border border-slate-200";
+        return `
+          <button disabled class="px-4 py-2.5 ${badgeColor} font-bold text-xs rounded-xl cursor-not-allowed w-full sm:w-auto">
+            ${status.label}
+          </button>
+        `;
+      }
+
+      // Open and available
+      const btnClass = context === 'hero' 
+        ? "px-6 py-3 bg-brand-500 hover:bg-brand-400 text-white font-black text-xs sm:text-sm rounded-xl shadow-lg transition flex items-center justify-center gap-2"
+        : "px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center justify-center gap-1.5";
+
+      return `
+        <button onclick="handleQuickRegister('${event.id}')" class="${btnClass} w-full sm:w-auto">
+          <i data-lucide="check-circle" class="w-4 h-4"></i> Register Now
+        </button>
+      `;
+    }
+
+    // Render Category Pills
+    function renderCategoryPills() {
+      const container = document.getElementById('category-pills');
+      if (!container) return;
+
+      const allCats = ["All", ...state.categories];
+      container.innerHTML = allCats.map(cat => {
+        const isSelected = state.selectedCategory === cat;
+        const activeClass = isSelected 
+          ? "bg-slate-900 text-white font-extrabold shadow-sm"
+          : "bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold";
+        return `
+          <button onclick="setCategoryFilter('${cat}')" class="px-3.5 py-1.5 rounded-xl text-xs whitespace-nowrap transition ${activeClass}">
+            ${cat}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function setCategoryFilter(category) {
+      state.selectedCategory = category;
+      renderCategoryPills();
+      renderActivities();
+    }
+
+    // Render Activities Grid
+    function renderActivities() {
+      const grid = document.getElementById('activities-grid');
+      const counter = document.getElementById('activity-counter-badge');
+      const query = (document.getElementById('search-activity-input')?.value || '').toLowerCase();
+
+      let filtered = state.events.filter(ev => {
+        const matchCategory = state.selectedCategory === "All" || ev.category === state.selectedCategory;
+        const matchSearch = ev.title.toLowerCase().includes(query) || ev.venue.toLowerCase().includes(query);
+        return matchCategory && matchSearch;
+      });
+
+      // Sort by start date ascending
+      filtered.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+
+      if (counter) counter.textContent = `${filtered.length} Activities`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-16 text-center space-y-3 bg-white rounded-3xl border border-dashed border-slate-200">
+            <div class="w-12 h-12 mx-auto rounded-full bg-slate-100 text-slate-400 flex items-center justify-center">
+              <i data-lucide="inbox" class="w-6 h-6"></i>
+            </div>
+            <p class="text-sm font-bold text-slate-700">No campus activities match your criteria</p>
+            <p class="text-xs text-slate-400">Try adjusting your category filter or search keywords.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      grid.innerHTML = filtered.map(ev => {
+        const regStatus = getRegistrationStatus(ev);
+        const count = getRegisteredCount(ev.id);
+        const seatsLeft = Math.max(0, ev.quota - count);
+        const isRegistered = state.currentUser ? isUserRegisteredFor(ev.id, state.currentUser.studentId) : false;
+        
+        const start = new Date(ev.startTime);
+        const end = new Date(ev.endTime);
+        const dateStr = start.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        const timeStr = `${start.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })} - ${end.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
+
+        return `
+          <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-5">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-1 rounded-xl bg-brand-50 text-brand-700 font-extrabold text-[11px]">${ev.category}</span>
+                ${ev.hasCertificate ? `
+                  <span class="px-2 py-0.5 rounded-lg bg-emerald-50 text-emerald-600 font-bold text-[10px] flex items-center gap-1 border border-emerald-100">
+                    <i data-lucide="award" class="w-3 h-3"></i> Certificate
+                  </span>
+                ` : ''}
+              </div>
+
+              <h3 class="font-black text-slate-900 text-base leading-snug">${ev.title}</h3>
+              <p class="text-xs text-slate-500 line-clamp-3 leading-relaxed">${ev.desc}</p>
+            </div>
+
+            <div class="space-y-4 pt-3 border-t border-slate-100 text-xs">
+              <div class="space-y-1.5 text-slate-600">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="clock" class="w-3.5 h-3.5 text-slate-400"></i>
+                  <span>${dateStr} • ${timeStr}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400"></i>
+                  <span class="truncate">${ev.venue}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i data-lucide="calendar-range" class="w-3.5 h-3.5 text-slate-400"></i>
+                  <span class="text-[11px] text-slate-500">Reg: ${formatSimpleDate(ev.regOpenTime)} - ${formatSimpleDate(ev.regCloseTime)}</span>
+                </div>
+              </div>
+
+              <!-- Quota meter -->
+              <div>
+                <div class="flex justify-between text-[11px] font-bold mb-1">
+                  <span class="text-slate-500">${count} students registered</span>
+                  <span class="${seatsLeft <= 5 ? 'text-amber-600' : 'text-slate-700'}">${seatsLeft} spots left</span>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                  <div class="bg-brand-600 h-1.5 rounded-full" style="width: ${Math.min(100, (count / ev.quota) * 100)}%"></div>
+                </div>
+              </div>
+
+              <!-- Action Button -->
+              <div class="pt-1">
+                ${renderRegisterButton(ev, regStatus, isRegistered, 'card')}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // Explore View Aggregator
+    function renderExploreView() {
+      renderEarliestActivityBanner();
+      renderCategoryPills();
+      renderActivities();
+    }
+
+    // Quick Register Action for an Event
+    function handleQuickRegister(eventId) {
+      if (!state.currentUser) {
+        showToast("Please sign in or create your student profile first.", "info");
+        openModal('modal-signin');
+        return;
+      }
+
+      const event = state.events.find(e => e.id === eventId);
+      if (!event) return;
+
+      const status = getRegistrationStatus(event);
+      if (!status.canRegister) {
+        showToast(status.label, "error");
+        return;
+      }
+
+      if (isUserRegisteredFor(eventId, state.currentUser.studentId)) {
+        showToast("You are already registered for this activity!", "info");
+        openPassModalForEvent(eventId);
+        return;
+      }
+
+      // Generate Unique Verification Token for Door Scan
+      const randomCode = Math.floor(1000 + Math.random() * 9000);
+      const token = `CUVA-PASS-${randomCode}-${event.category.substring(0,4).toUpperCase()}`;
+
+      const newRegistration = {
+        id: `reg_${Date.now()}`,
+        eventId: event.id,
+        studentId: state.currentUser.studentId,
+        registeredAt: new Date().toISOString(),
+        status: "REGISTERED",
+        token: token
+      };
+
+      state.registrations.push(newRegistration);
+      saveAllState();
+
+      showToast(`Registered successfully for ${event.title}!`, "success");
+      updatePassCounter();
+      renderEarliestActivityBanner();
+      renderActivities();
+      openPassModal(newRegistration, event, state.currentUser);
+    }
+
+    // Open Modal for an Existing Registration
+    function openPassModalForEvent(eventId) {
+      if (!state.currentUser) return;
+      const reg = state.registrations.find(r => r.eventId === eventId && r.studentId === state.currentUser.studentId);
+      const ev = state.events.find(e => e.id === eventId);
+      if (reg && ev) {
+        openPassModal(reg, ev, state.currentUser);
+      }
+    }
+
+    function openPassModal(registration, event, student) {
+      document.getElementById('pass-event-title').textContent = event.title;
+      document.getElementById('pass-event-category').textContent = event.category;
+      document.getElementById('pass-token-display').textContent = registration.token;
+      document.getElementById('pass-student-name').textContent = student.name;
+      document.getElementById('pass-student-id').textContent = student.studentId;
+      document.getElementById('pass-wechat').textContent = student.wechat;
+      
+      const start = new Date(event.startTime);
+      const end = new Date(event.endTime);
+      document.getElementById('pass-event-time').textContent = `${start.toLocaleDateString()} ${start.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} - ${end.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+      document.getElementById('pass-event-venue').textContent = event.venue;
+
+      const certRow = document.getElementById('pass-cert-row');
+      if (certRow) {
+        certRow.style.display = event.hasCertificate ? 'flex' : 'none';
+      }
+
+      // Generate Clean QR Code
+      const qrContainer = document.getElementById('pass-qrcode');
+      qrContainer.innerHTML = "";
+      try {
+        new QRCode(qrContainer, {
+          text: registration.token,
+          width: 140,
+          height: 140,
+          colorDark: "#1e1b4b",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+      } catch (err) {
+        qrContainer.innerHTML = `<span class="font-mono text-xs font-bold">${registration.token}</span>`;
+      }
+
+      openModal('modal-pass');
+    }
+
+    // Render "My Passes" View
+    function renderMyPasses() {
+      const container = document.getElementById('my-passes-grid');
+      if (!state.currentUser) {
+        container.innerHTML = `
+          <div class="col-span-full py-16 text-center space-y-4 bg-white rounded-3xl border border-dashed border-slate-200 p-6">
+            <div class="w-12 h-12 mx-auto rounded-full bg-brand-50 text-brand-600 flex items-center justify-center">
+              <i data-lucide="lock" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-bold text-slate-800 text-sm">Sign in to view your activity passes</h3>
+            <p class="text-xs text-slate-400">All your verified CUVA registrations and entrance QR tickets are stored securely in your student profile.</p>
+            <button onclick="openModal('modal-signin')" class="px-5 py-2.5 bg-brand-600 text-white font-bold text-xs rounded-xl shadow-xs">
+              Student Sign In
+            </button>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      const myRegs = state.registrations.filter(r => r.studentId === state.currentUser.studentId);
+      if (myRegs.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-16 text-center space-y-3 bg-white rounded-3xl border border-dashed border-slate-200 p-6">
+            <div class="w-12 h-12 mx-auto rounded-full bg-slate-100 text-slate-400 flex items-center justify-center">
+              <i data-lucide="ticket" class="w-6 h-6"></i>
+            </div>
+            <p class="font-bold text-slate-700 text-sm">No activity registrations yet</p>
+            <p class="text-xs text-slate-400">Browse campus board games, debates, and activities to secure your spot.</p>
+            <button onclick="switchTab('explore')" class="px-4 py-2 bg-brand-600 text-white font-bold text-xs rounded-xl">
+              Browse Activities
+            </button>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      container.innerHTML = myRegs.map(reg => {
+        const ev = state.events.find(e => e.id === reg.eventId) || {
+          title: "Archived Activity",
+          category: "General",
+          venue: "Campus",
+          startTime: new Date().toISOString(),
+          endTime: new Date().toISOString()
+        };
+
+        const start = new Date(ev.startTime);
+        const isCheckedIn = reg.status === "CHECKED_IN";
+
+        return `
+          <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+            <div class="flex justify-between items-start gap-2">
+              <div>
+                <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-brand-50 text-brand-700">${ev.category}</span>
+                <h4 class="font-black text-slate-900 text-base mt-1">${ev.title}</h4>
+              </div>
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-black uppercase ${isCheckedIn ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                ${isCheckedIn ? 'Checked In' : 'Confirmed'}
+              </span>
+            </div>
+
+            <div class="space-y-1.5 text-xs text-slate-600">
+              <div class="flex items-center gap-2">
+                <i data-lucide="calendar" class="w-3.5 h-3.5 text-slate-400"></i>
+                <span>${start.toLocaleDateString()} • ${start.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400"></i>
+                <span>${ev.venue}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i data-lucide="hash" class="w-3.5 h-3.5 text-slate-400"></i>
+                <span class="font-mono text-[11px] text-slate-500 font-bold">${reg.token}</span>
+              </div>
+            </div>
+
+            <button onclick="openPassModalForEvent('${ev.id}')" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5">
+              <i data-lucide="qr-code" class="w-4 h-4"></i> View Entry QR Pass
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function updatePassCounter() {
+      const count = state.currentUser 
+        ? state.registrations.filter(r => r.studentId === state.currentUser.studentId).length
+        : 0;
+      document.getElementById('my-passes-count').textContent = count;
+      document.getElementById('m-passes-count').textContent = count;
+    }
+
+    // Render Organizer Desk
+    function renderOrganizerDashboard() {
+      const guardNotice = document.getElementById('organizer-guard-notice');
+      const mainContent = document.getElementById('organizer-main-content');
+      const superAdminPanel = document.getElementById('super-admin-panel');
+      const roleBadge = document.getElementById('organizer-badge-role');
+
+      // Verify Organizer Authority
+      const hasAccess = isAuthorizedOrganizer();
+
+      if (!hasAccess) {
+        guardNotice.classList.remove('hidden');
+        mainContent.classList.add('hidden');
+        return;
+      }
+
+      // Authorized
+      guardNotice.classList.add('hidden');
+      mainContent.classList.remove('hidden');
+
+      // Toggle Super Admin Panel exclusively for 202453080043
+      if (isSuperAdmin()) {
+        superAdminPanel.classList.remove('hidden');
+        if (roleBadge) roleBadge.textContent = "Master Super Admin";
+        renderSuperAdminList();
+      } else {
+        superAdminPanel.classList.add('hidden');
+        if (roleBadge) roleBadge.textContent = "Authorized Organizer";
+      }
+
+      renderAdminEventsTable();
+      renderAdminRoster();
+      populateCategorySelect();
+      renderCategoryManageList();
+    }
+
+    // Super Admin: Render Authorized Organizers List
+    function renderSuperAdminList() {
+      const container = document.getElementById('authorized-ids-list');
+      const counter = document.getElementById('superadmin-authorized-count');
+      if (!container) return;
+
+      if (counter) counter.textContent = `${state.authorizedOrganizers.length} Authorized Organizers`;
+
+      container.innerHTML = state.authorizedOrganizers.map(id => {
+        const isMaster = id === SUPER_ADMIN_ID;
+        const student = state.users.find(u => u.studentId === id);
+        const name = student ? student.name : "Unregistered Account";
+
+        return `
+          <div class="flex items-center justify-between p-2.5 rounded-xl bg-white/10 border border-white/10 text-xs">
+            <div class="flex items-center gap-2 truncate pr-1">
+              <span class="w-2 h-2 rounded-full ${isMaster ? 'bg-amber-400' : 'bg-emerald-400'}"></span>
+              <div class="truncate">
+                <span class="font-mono font-bold text-white">${id}</span>
+                <span class="text-[10px] text-rose-200 block truncate">${name} ${isMaster ? '(Root Super Admin)' : ''}</span>
+              </div>
+            </div>
+            ${isMaster ? `
+              <span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/20 text-amber-300 font-black border border-amber-500/40 whitespace-nowrap">ROOT</span>
+            ` : `
+              <button onclick="handleSuperAdminRemoveID('${id}')" title="Revoke Organizer Access" class="p-1 hover:bg-rose-900/60 rounded text-rose-300 hover:text-white transition flex-shrink-0">
+                <i data-lucide="user-minus" class="w-4 h-4"></i>
+              </button>
+            `}
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // Super Admin: Add ID directly to database
+    function handleSuperAdminAddID() {
+      if (!isSuperAdmin()) {
+        showToast("Unauthorized. Only Super Admin (202453080043) can modify privileges.", "error");
+        return;
+      }
+
+      const input = document.getElementById('sa-grant-id-input');
+      const id = (input.value || '').trim();
+
+      if (!id) {
+        showToast("Please enter a valid Student ID.", "error");
+        return;
+      }
+
+      if (state.authorizedOrganizers.includes(id)) {
+        showToast(`Student ID ${id} already has organizer privileges.`, "info");
+        return;
+      }
+
+      state.authorizedOrganizers.push(id);
+      saveAllState();
+      input.value = "";
+      renderSuperAdminList();
+      showToast(`Privilege granted: Student ID ${id} can now access the Organizer Desk.`, "success");
+    }
+
+    // Super Admin: Revoke ID from database (Iframe safe confirmation)
+    function handleSuperAdminRemoveID(id) {
+      if (!isSuperAdmin()) return;
+      if (id === SUPER_ADMIN_ID) {
+        showToast("Root Super Admin cannot be removed.", "error");
+        return;
+      }
+
+      openConfirmDialog(
+        "Revoke Organizer Privileges",
+        `Are you sure you want to remove organizer privileges from Student ID ${id}? They will no longer be able to access this desk.`,
+        () => {
+          state.authorizedOrganizers = state.authorizedOrganizers.filter(oId => oId !== id);
+          saveAllState();
+          renderSuperAdminList();
+          showToast(`Revoked organizer access for ${id}.`, "info");
+        }
+      );
+    }
+
+    function renderAdminEventsTable() {
+      const tbody = document.getElementById('admin-events-list-body');
+      const counter = document.getElementById('admin-event-count');
+      if (counter) counter.textContent = `${state.events.length} Activities`;
+
+      tbody.innerHTML = state.events.map(ev => {
+        const count = getRegisteredCount(ev.id);
+        const start = new Date(ev.startTime);
+        const end = new Date(ev.endTime);
+        const dateStr = `${start.toLocaleDateString('en-US', {month:'numeric', day:'numeric'})} ${start.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})} - ${end.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}`;
+        const regStr = `${new Date(ev.regOpenTime).toLocaleDateString([], {month:'numeric', day:'numeric'})} to ${new Date(ev.regCloseTime).toLocaleDateString([], {month:'numeric', day:'numeric'})}`;
+
+        return `
+          <tr class="hover:bg-slate-50/80 transition">
+            <td class="py-3 px-4">
+              <p class="font-bold text-slate-900">${ev.title}</p>
+              <span class="text-[10px] text-brand-600 font-semibold">${ev.category} • ${ev.venue}</span>
+            </td>
+            <td class="py-3 px-4 font-medium text-slate-600">${dateStr}</td>
+            <td class="py-3 px-4 text-slate-500">${regStr}</td>
+            <td class="py-3 px-4">
+              <span class="font-bold ${count >= ev.quota ? 'text-rose-600' : 'text-slate-800'}">${count} / ${ev.quota}</span>
+            </td>
+            <td class="py-3 px-4">
+              ${ev.hasCertificate ? '<span class="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-bold text-[10px]">Yes</span>' : '<span class="text-slate-400">No</span>'}
+            </td>
+            <td class="py-3 px-4 text-right">
+              <div class="flex items-center justify-end gap-1.5">
+                <button onclick="openEditActivityModal('${ev.id}')" title="Edit Schedule / Info" class="p-1.5 hover:bg-slate-100 rounded-lg text-slate-600 hover:text-brand-600 transition">
+                  <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                </button>
+                <button onclick="handleDeleteActivity('${ev.id}')" title="Cancel Activity" class="p-1.5 hover:bg-rose-50 rounded-lg text-slate-400 hover:text-rose-600 transition">
+                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      // Populate filter dropdown for roster
+      const filterSelect = document.getElementById('admin-event-filter');
+      if (filterSelect) {
+        const curVal = filterSelect.value;
+        filterSelect.innerHTML = `
+          <option value="all">All Activities (Master Roster)</option>
+          ${state.events.map(e => `<option value="${e.id}">${e.title}</option>`).join('')}
+        `;
+        filterSelect.value = curVal || 'all';
+      }
+
+      lucide.createIcons();
+    }
+
+    function renderAdminRoster() {
+      const tbody = document.getElementById('admin-roster-body');
+      const filterEventId = document.getElementById('admin-event-filter')?.value || 'all';
+
+      let regs = state.registrations;
+      if (filterEventId !== 'all') {
+        regs = regs.filter(r => r.eventId === filterEventId);
+      }
+
+      if (regs.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" class="py-8 text-center text-slate-400 italic">No student registrations recorded for this selection.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = regs.map(reg => {
+        const student = state.users.find(u => u.studentId === reg.studentId) || {
+          name: "Student " + reg.studentId,
+          studentId: reg.studentId,
+          wechat: "--",
+          major: "--",
+          grade: "--"
+        };
+        const ev = state.events.find(e => e.id === reg.eventId) || { title: "Activity (" + reg.eventId + ")" };
+        const isCheckedIn = reg.status === "CHECKED_IN";
+
+        return `
+          <tr class="hover:bg-slate-50/80 transition">
+            <td class="py-3 px-4 font-bold text-slate-900">${student.name}</td>
+            <td class="py-3 px-4 font-mono text-slate-600">${student.studentId}</td>
+            <td class="py-3 px-4 text-slate-600">${student.wechat}</td>
+            <td class="py-3 px-4 text-slate-500">${student.major} (${student.grade})</td>
+            <td class="py-3 px-4 text-slate-700 max-w-xs truncate">${ev.title}</td>
+            <td class="py-3 px-4">
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase ${isCheckedIn ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'}">
+                ${isCheckedIn ? 'Checked In' : 'Pending Door'}
+              </span>
+            </td>
+            <td class="py-3 px-4 font-mono text-[11px] text-slate-500">${reg.token}</td>
+            <td class="py-3 px-4 text-right">
+              ${isCheckedIn ? `
+                <button onclick="toggleAttendance('${reg.id}', false)" class="text-[11px] font-bold text-slate-400 hover:text-slate-600 underline">
+                  Undo Check-in
+                </button>
+              ` : `
+                <button onclick="toggleAttendance('${reg.id}', true)" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] rounded-lg shadow-xs transition">
+                  Check-in Now
+                </button>
+              `}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function toggleAttendance(regId, checkIn) {
+      const reg = state.registrations.find(r => r.id === regId);
+      if (reg) {
+        reg.status = checkIn ? "CHECKED_IN" : "REGISTERED";
+        saveAllState();
+        renderAdminRoster();
+        showToast(`Attendance updated for student token ${reg.token}.`, "success");
+      }
+    }
+
+    // Door Ticket Verification Engine
+    function verifyScannedTicket() {
+      const input = document.getElementById('scan-token-input');
+      const token = (input.value || '').trim().toUpperCase();
+      const feedback = document.getElementById('scan-feedback');
+
+      if (!token) {
+        showToast("Please enter or scan a pass token code.", "error");
+        return;
+      }
+
+      feedback.classList.remove('hidden');
+
+      const reg = state.registrations.find(r => r.token.toUpperCase() === token);
+      if (!reg) {
+        feedback.innerHTML = `
+          <div class="p-4 bg-rose-50 border border-rose-200 rounded-2xl flex items-center gap-3 text-rose-800 text-xs">
+            <i data-lucide="alert-octagon" class="w-5 h-5 text-rose-600 flex-shrink-0"></i>
+            <div>
+              <p class="font-bold">Invalid Entry Pass</p>
+              <p>No registration found matching token: <span class="font-mono font-bold">${token}</span>.</p>
+            </div>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      const student = state.users.find(u => u.studentId === reg.studentId) || { name: "Student" };
+      const event = state.events.find(e => e.id === reg.eventId) || { title: "CUVA Activity" };
+
+      if (reg.status === "CHECKED_IN") {
+        feedback.innerHTML = `
+          <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl flex items-center justify-between gap-3 text-amber-900 text-xs">
+            <div class="flex items-center gap-3">
+              <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-600 flex-shrink-0"></i>
+              <div>
+                <p class="font-bold">Pass Already Used</p>
+                <p><strong>${student.name}</strong> (${reg.studentId}) was already checked into <em>${event.title}</em>.</p>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        reg.status = "CHECKED_IN";
+        saveAllState();
+        renderAdminRoster();
+        feedback.innerHTML = `
+          <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center justify-between gap-3 text-emerald-900 text-xs">
+            <div class="flex items-center gap-3">
+              <i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-600 flex-shrink-0"></i>
+              <div>
+                <p class="font-bold text-sm">Valid Ticket • Check-in Successful!</p>
+                <p>Welcome, <strong>${student.name}</strong> (${reg.studentId}) to <strong>${event.title}</strong>.</p>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      input.value = "";
+      lucide.createIcons();
+    }
+
+    function simulateCameraScan() {
+      // Pick first registered student as demo scan
+      if (state.registrations.length === 0) {
+        showToast("No registrations available to simulate scan. Register an activity first!", "info");
+        return;
+      }
+      const demoReg = state.registrations[0];
+      document.getElementById('scan-token-input').value = demoReg.token;
+      verifyScannedTicket();
+    }
+
+    // CSV Roster Export
+    function exportCurrentEventCSV() {
+      const filterEventId = document.getElementById('admin-event-filter')?.value || 'all';
+      let regs = state.registrations;
+      if (filterEventId !== 'all') {
+        regs = regs.filter(r => r.eventId === filterEventId);
+      }
+
+      if (regs.length === 0) {
+        showToast("No attendees to export.", "info");
+        return;
+      }
+
+      let csv = "Student Name,Student ID,WeChat Handle,Major,Grade,Activity Name,Door Check-in Status,Pass Token,Registered At\n";
+
+      regs.forEach(r => {
+        const student = state.users.find(u => u.studentId === r.studentId) || { name: "Unknown", wechat: "", major: "", grade: "" };
+        const ev = state.events.find(e => e.id === r.eventId) || { title: "Unknown Activity" };
+        csv += `"${student.name}","${r.studentId}","${student.wechat}","${student.major}","${student.grade}","${ev.title}","${r.status}","${r.token}","${r.registeredAt}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `CUVA_Attendance_Roster_${Date.now()}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast("CSV attendance roster downloaded successfully.", "success");
+    }
+
+    // Activity Form Handlers
+    function populateCategorySelect() {
+      const select = document.getElementById('ev-category');
+      if (!select) return;
+      select.innerHTML = state.categories.map(c => `<option value="${c}">${c}</option>`).join('');
+    }
+
+    function openEditActivityModal(eventId = null) {
+      const form = document.getElementById('form-event-editor');
+      form.reset();
+
+      populateCategorySelect();
+
+      if (eventId) {
+        const ev = state.events.find(e => e.id === eventId);
+        if (!ev) return;
+        document.getElementById('event-editor-modal-title').textContent = "Modify Activity Details";
+        document.getElementById('ev-edit-id').value = ev.id;
+        document.getElementById('ev-title').value = ev.title;
+        document.getElementById('ev-category').value = ev.category;
+        document.getElementById('ev-quota').value = ev.quota;
+        document.getElementById('ev-venue').value = ev.venue;
+        document.getElementById('ev-start-time').value = ev.startTime.slice(0, 16);
+        document.getElementById('ev-end-time').value = ev.endTime.slice(0, 16);
+        document.getElementById('ev-reg-open').value = ev.regOpenTime.slice(0, 16);
+        document.getElementById('ev-reg-close').value = ev.regCloseTime.slice(0, 16);
+        document.getElementById('ev-certificate').checked = !!ev.hasCertificate;
+        document.getElementById('ev-desc').value = ev.desc;
+      } else {
+        document.getElementById('event-editor-modal-title').textContent = "Publish Campus Activity";
+        document.getElementById('ev-edit-id').value = "";
+        
+        // Defaults: Activity held tomorrow for 2 hours, reg opens now
+        const now = new Date();
+        const tomorrow = new Date(now);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(19, 0, 0, 0);
+
+        const tomorrowEnd = new Date(tomorrow);
+        tomorrowEnd.setHours(21, 0, 0, 0);
+
+        const regClose = new Date(tomorrow);
+        regClose.setHours(17, 0, 0, 0);
+
+        document.getElementById('ev-start-time').value = tomorrow.toISOString().slice(0, 16);
+        document.getElementById('ev-end-time').value = tomorrowEnd.toISOString().slice(0, 16);
+        document.getElementById('ev-reg-open').value = now.toISOString().slice(0, 16);
+        document.getElementById('ev-reg-close').value = regClose.toISOString().slice(0, 16);
+        document.getElementById('ev-certificate').checked = false;
+      }
+
+      openModal('modal-event-editor');
+    }
+
+    function handleSaveActivity(e) {
+      e.preventDefault();
+      const editId = document.getElementById('ev-edit-id').value;
+
+      const title = document.getElementById('ev-title').value.trim();
+      const category = document.getElementById('ev-category').value;
+      const quota = parseInt(document.getElementById('ev-quota').value, 10);
+      const venue = document.getElementById('ev-venue').value.trim();
+      const startTime = new Date(document.getElementById('ev-start-time').value).toISOString();
+      const endTime = new Date(document.getElementById('ev-end-time').value).toISOString();
+      const regOpenTime = new Date(document.getElementById('ev-reg-open').value).toISOString();
+      const regCloseTime = new Date(document.getElementById('ev-reg-close').value).toISOString();
+      const hasCertificate = document.getElementById('ev-certificate').checked;
+      const desc = document.getElementById('ev-desc').value.trim();
+
+      if (new Date(endTime) <= new Date(startTime)) {
+        showToast("Activity finish time must be later than start time.", "error");
+        return;
+      }
+
+      if (new Date(regCloseTime) <= new Date(regOpenTime)) {
+        showToast("Registration closing time must be after opening time.", "error");
+        return;
+      }
+
+      if (editId) {
+        // Edit existing
+        const ev = state.events.find(e => e.id === editId);
+        if (ev) {
+          Object.assign(ev, { title, category, quota, venue, startTime, endTime, regOpenTime, regCloseTime, hasCertificate, desc });
+          showToast(`Updated activity: ${title}`, "success");
+        }
+      } else {
+        // Create new
+        const newEvent = {
+          id: `ev_${Date.now()}`,
+          title, category, quota, venue, startTime, endTime, regOpenTime, regCloseTime, hasCertificate, desc
+        };
+        state.events.unshift(newEvent);
+        showToast(`Published new activity: ${title}`, "success");
+      }
+
+      saveAllState();
+      closeModal('modal-event-editor');
+      renderEarliestActivityBanner();
+      renderActivities();
+      renderAdminEventsTable();
+    }
+
+    // Activity Delete Action (Using Iframe-Safe Custom Modal)
+    function handleDeleteActivity(eventId) {
+      const ev = state.events.find(e => e.id === eventId);
+      if (!ev) return;
+      
+      const count = getRegisteredCount(eventId);
+      openConfirmDialog(
+        "Delete Activity",
+        `Are you sure you want to cancel and remove "${ev.title}"? (${count} registered student passes will be cancelled).`,
+        () => {
+          state.events = state.events.filter(e => e.id !== eventId);
+          state.registrations = state.registrations.filter(r => r.eventId !== eventId);
+          saveAllState();
+          renderEarliestActivityBanner();
+          renderActivities();
+          renderAdminEventsTable();
+          renderAdminRoster();
+          updatePassCounter();
+          showToast(`Activity "${ev.title}" has been deleted.`, "info");
+        }
+      );
+    }
+
+    // Category Manager CRUD
+    function renderCategoryManageList() {
+      const container = document.getElementById('categories-manage-list');
+      if (!container) return;
+
+      container.innerHTML = state.categories.map((cat, idx) => `
+        <div class="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+          <span class="font-bold text-slate-800">${cat}</span>
+          <div class="flex items-center gap-1">
+            <button onclick="handleRenameCategory(${idx})" class="p-1 hover:bg-slate-200 rounded text-slate-500 hover:text-slate-900">
+              <i data-lucide="edit-2" class="w-3.5 h-3.5"></i>
+            </button>
+            <button onclick="handleDeleteCategory(${idx})" class="p-1 hover:bg-rose-100 rounded text-slate-400 hover:text-rose-600">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function handleAddCategory() {
+      const input = document.getElementById('new-category-input');
+      const val = (input.value || '').trim();
+      if (!val) return;
+      if (state.categories.includes(val)) {
+        showToast("Category already exists.", "info");
+        return;
+      }
+      state.categories.push(val);
+      saveAllState();
+      input.value = "";
+      renderCategoryManageList();
+      populateCategorySelect();
+      renderCategoryPills();
+      showToast(`Added category: ${val}`, "success");
+    }
+
+    function handleRenameCategory(index) {
+      const current = state.categories[index];
+      openPromptDialog("Rename Activity Category", "Enter new name for this category:", current, (newName) => {
+        const trimmed = newName.trim();
+        if (!trimmed || trimmed === current) return;
+        state.events.forEach(ev => {
+          if (ev.category === current) ev.category = trimmed;
+        });
+        state.categories[index] = trimmed;
+        saveAllState();
+        renderCategoryManageList();
+        populateCategorySelect();
+        renderCategoryPills();
+        renderActivities();
+        renderAdminEventsTable();
+        showToast(`Renamed category to "${trimmed}".`, "success");
+      });
+    }
+
+    function handleDeleteCategory(index) {
+      const cat = state.categories[index];
+      if (state.categories.length <= 1) {
+        showToast("You must maintain at least one category.", "error");
+        return;
+      }
+
+      openConfirmDialog(
+        "Delete Category",
+        `Delete category "${cat}"? Existing activities under this category will be preserved.`,
+        () => {
+          state.categories.splice(index, 1);
+          if (state.selectedCategory === cat) state.selectedCategory = "All";
+          saveAllState();
+          renderCategoryManageList();
+          populateCategorySelect();
+          renderCategoryPills();
+          showToast(`Category "${cat}" removed.`, "info");
+        }
+      );
+    }
+
+    // Auth Handlers (Signup / Signin / Logout)
+    function handleSignup(e) {
+      e.preventDefault();
+      const name = document.getElementById('su-name').value.trim();
+      const studentId = document.getElementById('su-studentid').value.trim();
+      const wechat = document.getElementById('su-wechat').value.trim();
+      const major = document.getElementById('su-major').value.trim();
+      const grade = document.getElementById('su-grade').value;
+      const password = document.getElementById('su-password').value;
+
+      if (password.length < 8) {
+        showToast("Password must be at least 8 characters long.", "error");
+        return;
+      }
+
+      // Check if student ID already registered
+      if (state.users.some(u => u.studentId === studentId)) {
+        showToast(`Student ID ${studentId} is already registered! Please Sign In.`, "error");
+        switchModal('modal-signup', 'modal-signin');
+        return;
+      }
+
+      const newUser = {
+        name, studentId, wechat, major, grade, passwordHash: password
+      };
+
+      state.users.push(newUser);
+      state.currentUser = newUser;
+      saveAllState();
+
+      closeModal('modal-signup');
+      renderAuthNav();
+      updatePassCounter();
+      renderEarliestActivityBanner();
+      renderActivities();
+      showToast(`Welcome, ${name}! Your student profile is active.`, "success");
+    }
+
+    function handleSignin(e) {
+      e.preventDefault();
+      const studentId = document.getElementById('si-studentid').value.trim();
+      const password = document.getElementById('si-password').value;
+
+      const user = state.users.find(u => u.studentId === studentId && u.passwordHash === password);
+      if (!user) {
+        showToast("Invalid Student ID or password. Please try again.", "error");
+        return;
+      }
+
+      state.currentUser = user;
+      saveAllState();
+
+      closeModal('modal-signin');
+      renderAuthNav();
+      updatePassCounter();
+      renderEarliestActivityBanner();
+      renderActivities();
+      if (state.currentTab === 'organizer') renderOrganizerDashboard();
+      showToast(`Welcome back, ${user.name}!`, "success");
+    }
+
+    function handleLogout() {
+      state.currentUser = null;
+      saveAllState();
+      renderAuthNav();
+      updatePassCounter();
+      renderEarliestActivityBanner();
+      renderActivities();
+      if (state.currentTab === 'passes') renderMyPasses();
+      if (state.currentTab === 'organizer') renderOrganizerDashboard();
+      showToast("Logged out successfully.", "info");
+    }
+
+    function quickFillSuperAdmin() {
+      document.getElementById('si-studentid').value = SUPER_ADMIN_ID;
+      document.getElementById('si-password').value = "admin12345";
+      showToast("Super Admin credentials loaded.", "info");
+    }
+
+    function renderAuthNav() {
+      const container = document.getElementById('auth-actions');
+      if (!container) return;
+
+      if (state.currentUser) {
+        container.innerHTML = `
+          <div class="flex items-center gap-2">
+            <div class="text-right hidden sm:block">
+              <p class="text-xs font-bold text-slate-800 leading-tight">${state.currentUser.name}</p>
+              <p class="text-[10px] font-mono text-slate-400">${state.currentUser.studentId} • ${state.currentUser.grade}</p>
+            </div>
+            <button onclick="handleLogout()" title="Log Out" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition flex items-center gap-1">
+              <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+              <span class="hidden sm:inline">Logout</span>
+            </button>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <div class="flex items-center gap-2">
+            <button onclick="openModal('modal-signin')" class="px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-slate-900 rounded-xl hover:bg-slate-100 transition">
+              Sign In
+            </button>
+            <button onclick="openModal('modal-signup')" class="px-3.5 py-1.5 text-xs font-bold bg-brand-600 hover:bg-brand-500 text-white rounded-xl shadow-xs transition">
+              Register ID
+            </button>
+          </div>
+        `;
+      }
+      lucide.createIcons();
+    }
+
+    // Modal Controllers
+    function openModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('hidden');
+    }
+
+    function switchModal(closeId, openId) {
+      closeModal(closeId);
+      openModal(openId);
+    }
+
+    function showLogoInfoAlert() {
+      openModal('modal-logo-info');
+    }
+
+    // Toast Notifications
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      let icon = 'info';
+      let colors = 'bg-slate-900 text-white border border-slate-800';
+
+      if (type === 'success') {
+        icon = 'check-circle';
+        colors = 'bg-emerald-900/90 text-emerald-100 border border-emerald-700 backdrop-blur-md';
+      } else if (type === 'error') {
+        icon = 'alert-circle';
+        colors = 'bg-rose-900/90 text-rose-100 border border-rose-700 backdrop-blur-md';
+      }
+
+      toast.className = `flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-xl text-xs font-bold pointer-events-auto transition-all transform translate-y-2 opacity-0 ${colors}`;
+      toast.innerHTML = `<i data-lucide="${icon}" class="w-4 h-4 flex-shrink-0"></i> <span>${message}</span>`;
+      container.appendChild(toast);
+      lucide.createIcons();
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 50);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Auto-refresh countdown status check every 30 seconds
+    setInterval(() => {
+      if (state.currentTab === 'explore') {
+        renderEarliestActivityBanner();
+        renderActivities();
+      }
+    }, 30000);
+
+    // Initial Window Load
+    window.onload = function() {
+      initDatabase();
+      renderAuthNav();
+      updatePassCounter();
+      switchTab('explore');
+    };
+  </script>
+</body>
+</html>
